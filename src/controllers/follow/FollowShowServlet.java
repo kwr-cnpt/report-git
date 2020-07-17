@@ -1,4 +1,4 @@
-package controllers.reports;
+package controllers.follow;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,21 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.Employee;
 import models.Follow;
-import models.Report;
 import utils.DBUtil;
 
-
 /**
- * Servlet implementation class ReportsShowServlet
+ * Servlet implementation class EnployeesIndexServlet
  */
-@WebServlet("/reports/show")
-public class ReportsShowServlet extends HttpServlet {
+@WebServlet("/follows/show")
+public class FollowShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportsShowServlet() {
+    public FollowShowServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +37,17 @@ public class ReportsShowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+        int page = 1;
+        try{
+            page = Integer.parseInt(request.getParameter("page"));
+        }catch(NumberFormatException e){ }
+        List<Employee> employees = em.createNamedQuery("getAllEmployees", Employee.class)
+                                     .setFirstResult(15 * (page-1))
+                                     .setMaxResults(15)
+                                     .getResultList();
+
+        long employees_count = (long)em.createNamedQuery("getEmployeesCount", Long.class)
+                                       .getSingleResult();
 
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
         List<Follow> follows = em.createNamedQuery("getFollowed", Follow.class)
@@ -51,13 +59,19 @@ public class ReportsShowServlet extends HttpServlet {
             followed.add(follows.get(i).getFollowed());
         }
 
+
         em.close();
 
-        request.setAttribute("report", r);
+        request.setAttribute("employees", employees);
+        request.setAttribute("employees_count", employees_count);
+        request.setAttribute("page", page);
         request.setAttribute("followed", followed);
-        request.setAttribute("_token", request.getSession().getId());
+        if(request.getSession().getAttribute("flush") != null){
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            request.getSession().removeAttribute("flush");
+        }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/follows/show.jsp");
         rd.forward(request, response);
     }
 

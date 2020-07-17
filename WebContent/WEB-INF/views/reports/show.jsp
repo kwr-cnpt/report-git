@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
+    <c:if test="${flush != null}">
+            <div id="flush_success">
+            <c:out value="${flush}"></c:out>
+            </div>
+        </c:if>
         <c:choose>
             <c:when test="${report != null}">
                 <h2>日報 詳細ページ</h2>
@@ -11,7 +16,34 @@
                     <tbody>
                         <tr>
                             <th>氏名</th>
-                            <td><c:out value="${report.employee.name}" /></td>
+                            <td>
+                                <c:out value="${report.employee.name}" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <c:choose>
+                                    <c:when test="${followed.contains(report.employee)}">
+                                    フォロー中&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </c:when>
+                                    <c:otherwise>
+                                    未フォロー&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </c:otherwise>
+                                    </c:choose>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>操作</th>
+                            <td>
+                            <c:choose>
+                                <c:when test="${followed.contains(report.employee)}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/follows/destroy?id=${report.employee.id}">
+                                        <button type="submit">フォロー解除</button>
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <form method="POST" action="${pageContext.request.contextPath}/follows/create?id=${report.employee.id}">
+                                       <button type="submit">フォローする</button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+                            </td>
                         </tr>
                         <tr>
                             <th>日付</th>
@@ -47,6 +79,8 @@
             </c:otherwise>
         </c:choose>
 
-        <p><a href="<c:url value='/reports/index' />">一覧に戻る</a></p>
+   <!--     <p><a href="<c:url value='/reports/index' />">日報一覧 画面へ</a></p> -->
+        <button class="browser_back" type="button" onclick="history.back()">前のページへ戻る</button>
+
     </c:param>
 </c:import>

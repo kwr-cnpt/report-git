@@ -16,8 +16,13 @@ import javax.persistence.Table;
 @Table(name = "follows")
 @NamedQueries({
     @NamedQuery(
-            name = "getFollowReports",
-            query = "SELECT r FROM Report AS r "
+            name = "getFollowed",
+            query = "SELECT f FROM Follow f WHERE f.follower = :follower"
+            ),
+
+    @NamedQuery(
+            name = "getFollowedCount",
+            query = "SELECT COUNT(f) From Follow AS f WHERE f.follower = :follower"
             ),
 })
 @Entity
@@ -28,12 +33,12 @@ public class Follow {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    @JoinColumn(name = "follower", nullable = false)
+    private Employee follower;
 
     @ManyToOne
-    @JoinColumn(name = "followed_id", nullable = false)
-    private Employee followed_employee;
+    @JoinColumn(name = "followed", nullable = false)
+    private Employee followed;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
@@ -49,20 +54,20 @@ public class Follow {
         this.id = id;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Employee getFollower() {
+        return follower;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setFollower(Employee follower) {
+        this.follower = follower;
     }
 
-    public Employee getFollowed_employee() {
-        return followed_employee;
+    public Employee getFollowed() {
+        return followed;
     }
 
-    public void setFollowed_employee(Employee followed_employee) {
-        this.followed_employee = followed_employee;
+    public void setFollowed(Employee followed) {
+        this.followed = followed;
     }
 
     public Timestamp getCreated_at() {
