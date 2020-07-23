@@ -8,6 +8,11 @@
             </div>
         </c:if>
         <h2>フォロー管理</h2>
+
+        <form method="GET" action="<c:url value='/search/employee' />">
+            <c:import url="../search/search.jsp" />
+        </form>
+
         <table id="employee_list">
             <tbody>
                 <tr>
@@ -34,12 +39,12 @@
                             <c:choose>
                                 <c:when test="${employee.delete_flag == 1}"></c:when>
                                 <c:when test="${followed.contains(employee)}">
-                                    <form method="POST" action="${pageContext.request.contextPath}/follows/destroy?id=${employee.id}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/follows/destroy?id=${employee.id}&rd=2">
                                         <button type="submit">フォロー解除</button>
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <form method="POST" action="${pageContext.request.contextPath}/follows/create?id=${employee.id}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/follows/create?id=${employee.id}&rd=2">
                                        <button type="submit">フォローする</button>
                                     </form>
                                 </c:otherwise>

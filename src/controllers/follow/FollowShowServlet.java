@@ -71,6 +71,7 @@ public class FollowShowServlet extends HttpServlet {
             request.getSession().removeAttribute("flush");
         }
 
+
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/follows/show.jsp");
         rd.forward(request, response);
     }

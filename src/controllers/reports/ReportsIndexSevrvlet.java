@@ -35,6 +35,8 @@ public class ReportsIndexSevrvlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        int backId = 2;
+
         int page;
         try{
             page = Integer.parseInt(request.getParameter("page"));
@@ -51,6 +53,7 @@ public class ReportsIndexSevrvlet extends HttpServlet {
 
         em.close();
 
+        request.setAttribute("backId", backId);
         request.setAttribute("reports", reports);
         request.setAttribute("reports_count", reports_count);
         request.setAttribute("page", page);

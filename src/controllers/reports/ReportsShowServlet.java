@@ -51,8 +51,11 @@ public class ReportsShowServlet extends HttpServlet {
             followed.add(follows.get(i).getFollowed());
         }
 
+        int backId = Integer.parseInt(request.getParameter("backId"));
+
         em.close();
 
+        request.setAttribute("backId", backId);
         request.setAttribute("report", r);
         request.setAttribute("followed", followed);
         request.setAttribute("_token", request.getSession().getId());

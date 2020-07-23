@@ -41,6 +41,8 @@ public class FollowIndexServlet extends HttpServlet {
 
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
 
+        int backId = 1;
+
         int page;
         try{
             page = Integer.parseInt(request.getParameter("page"));
@@ -70,6 +72,7 @@ public class FollowIndexServlet extends HttpServlet {
 
         em.close();
 
+        request.setAttribute("backId", backId);
         request.setAttribute("follow_reports", follow_reports);
         request.setAttribute("follow_reports_count", follow_reports_count);
         request.setAttribute("page", page);
@@ -77,9 +80,6 @@ public class FollowIndexServlet extends HttpServlet {
         request.setAttribute("follows", follows);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/follows/index.jsp");
         rd.forward(request, response);
-
-//        System.out.println(follows);
-//        System.out.println(follow_reports);
     }
 
 }

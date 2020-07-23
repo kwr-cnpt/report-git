@@ -163,7 +163,9 @@ h3 {
     font-size: larger;
 }
 
-button .browser_back {
-    display: inline-block;
-    margin-top: 10px;
+#search {
+    margin-bottom: 15px;
+}
+#search_button {
+    width: 50px;
 }

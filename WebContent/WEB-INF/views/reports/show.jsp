@@ -33,12 +33,12 @@
                             <td>
                             <c:choose>
                                 <c:when test="${followed.contains(report.employee)}">
-                                    <form method="POST" action="${pageContext.request.contextPath}/follows/destroy?id=${report.employee.id}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/follows/destroy?id=${report.employee.id}&reportId=${report.id}&backId=${backId}&rd=1">
                                         <button type="submit">フォロー解除</button>
                                     </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <form method="POST" action="${pageContext.request.contextPath}/follows/create?id=${report.employee.id}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/follows/create?id=${report.employee.id}&reportId=${report.id}&backId=${backId}&rd=1">
                                        <button type="submit">フォローする</button>
                                     </form>
                                 </c:otherwise>
@@ -79,8 +79,21 @@
             </c:otherwise>
         </c:choose>
 
-   <!--     <p><a href="<c:url value='/reports/index' />">日報一覧 画面へ</a></p> -->
-        <button class="browser_back" type="button" onclick="history.back()">前のページへ戻る</button>
+     <!--     <p><a href="<c:url value='/reports/index' />">日報一覧 に戻る</a></p> -->
+
+        <c:choose>
+            <c:when test="${backId == 1}">
+                <p><a href="<c:url value='/follows/index' />">フォロー中の日報一覧 に戻る</a></p>
+            </c:when>
+            <c:when test="${backId == 3}">
+                <p><a href="<c:url value='/index.html' />">トッポページ へ戻る</a></p>
+            </c:when>
+            <c:otherwise>
+                <p><a href="<c:url value='/reports/index' />">日報一覧 に戻る</a></p>
+            </c:otherwise>
+
+        </c:choose>
+
 
     </c:param>
 </c:import>

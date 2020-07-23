@@ -48,13 +48,21 @@ public class FollowDestroyServlet extends HttpServlet {
             }
         }
 
+       int rd = Integer.parseInt(request.getParameter("rd"));
+
         em.getTransaction().begin();
         em.remove(f);
         em.getTransaction().commit();
         em.close();
         request.getSession().setAttribute("flush", followed.getName() + "さんのフォローを解除しました。");
 
-        response.sendRedirect(request.getContextPath() + "/follows/show");
+//       response.sendRedirect(request.getContextPath() + "/follows/show");
+
+       if(rd == 2){
+            response.sendRedirect(request.getContextPath() + "/follows/show");
+        }else if(rd == 1){
+            response.sendRedirect(request.getContextPath() + "/reports/show?id=" + Integer.parseInt(request.getParameter("reportId")) + "&backId=" + Integer.parseInt(request.getParameter("backId")));
+        }
 
     }
 
