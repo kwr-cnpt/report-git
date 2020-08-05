@@ -9,11 +9,14 @@ body {
     width: 100%;
     height: 70px;
     background-color: #333333;
+    position: fixed;
+    top: 0px;
+    z-index: 10;
 }
 
 #content {
     width: 94%;
-    margin-top: 15px;
+    margin-top: 85px;
     padding-left: 3%;
 }
 
@@ -165,7 +168,9 @@ h3 {
 
 #search {
     margin-bottom: 15px;
+    line-height: 40px;
 }
 #search_button {
     width: 50px;
 }
+

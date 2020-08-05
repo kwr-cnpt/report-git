@@ -9,6 +9,11 @@
             </div>
         </c:if>
         <h2>日報一覧</h2>
+
+        <form method="GET" action="<c:url value='/search/report' />">
+            <c:import url="search.jsp" />
+        </form>
+
         <table id="report_list">
             <tbody>
                 <tr>

@@ -67,6 +67,14 @@
                                 <fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
                         </tr>
+                        <tr>
+                            <th>ステータス</th>
+                            <td>承認待/承認済み</td>
+                        </tr>
+                        <tr>
+                            <th>承認者</th>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
 

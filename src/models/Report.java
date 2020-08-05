@@ -38,6 +38,26 @@ import javax.persistence.Table;
             name = "getFollowReports",
             query = "SELECT r FROM Report AS r WHERE r.employee = :employee"
             ),
+    @NamedQuery(
+            name = "searchByEmployeeName",
+            query = "SELECT r FROM Report AS r WHERE r.employee.name LIKE :name"
+            ),
+    @NamedQuery(
+            name = "searchByTitle",
+            query = "SELECT r FROM Report AS r WHERE r.title LIKE :title"
+            ),
+    @NamedQuery(
+            name = "searchByContent",
+            query = "SELECT r FROM Report AS r WHERE r.content LIKE :content"
+            ),
+    @NamedQuery(
+            name = "searchByStartDate",
+            query = "SELECT r FROM Report AS r WHERE r.report_date >= :startDate"
+            ),
+    @NamedQuery(
+            name = "searchByEndDate",
+            query = "SELECT r FROM Report AS r WHERE r.report_date <= :endDate"
+            ),
 })
 @Entity
 public class Report {

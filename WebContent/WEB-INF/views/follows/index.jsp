@@ -3,21 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
-     <!--   <h2>フォローしている従業員一覧</h2>
-      <table>
-          <tbody>
-              <tr>
-                  <th>従業員名</th>
-                  <th>社員番号</th>
-              </tr>
-              <c:forEach var="f" items="${follows}" varStatus="status">
-                  <tr>
-                      <td><c:out value="${f.followed.name}" /></td>
-                      <td><c:out value="${f.followed.code}" /></td>
-                  </tr>
-              </c:forEach>
-          </tbody>
-      </table> -->
+
 
       <h2>フォロー中の日報一覧</h2>
         <table id="report_list">

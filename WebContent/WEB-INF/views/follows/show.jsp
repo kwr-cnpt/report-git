@@ -10,7 +10,7 @@
         <h2>フォロー管理</h2>
 
         <form method="GET" action="<c:url value='/search/employee' />">
-            <c:import url="../search/search.jsp" />
+            <c:import url="search.jsp" />
         </form>
 
         <table id="employee_list">

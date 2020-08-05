@@ -57,6 +57,7 @@ public class SearchEmployeeServlet extends HttpServlet {
                     .getResultList();
         }
 
+//      フォロー状態で検索
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
         List<Follow> follows = em.createNamedQuery("getFollowed", Follow.class)
                 .setParameter("follower", login_employee)
@@ -65,11 +66,28 @@ public class SearchEmployeeServlet extends HttpServlet {
         for(int i = 0; i < follows.size(); i++){
             followed.add(follows.get(i).getFollowed());
         }
+        List<Employee> a = em.createNamedQuery("getAllEmployees", Employee.class).getResultList();
+        for(int i = 0; i < followed.size(); i++){
+            a.remove(followed.get(i));
+        }
+
+        int status = 2;
+        if(request.getParameter("status") != null){
+            status = Integer.parseInt(request.getParameter("status"));
+        }
+        List<Employee> byStatus = new ArrayList<Employee>();
+        if(status == 1){
+            byStatus = followed;
+        }else if(status == 0){
+            byStatus = a;
+        }else{
+            byStatus = allEmployees;
+        }
 
 //        全てを満たす検索結果を取得
         List<Employee> e = new ArrayList<Employee>();
         for(int i = 0; i < allEmployees.size(); i++){
-            if(employees_byName.contains(allEmployees.get(i)) && employees_byCode.contains(allEmployees.get(i))){
+            if(employees_byName.contains(allEmployees.get(i)) && employees_byCode.contains(allEmployees.get(i)) && byStatus.contains(allEmployees.get(i))){
                 e.add(allEmployees.get(i));
             }
         }
@@ -91,14 +109,15 @@ public class SearchEmployeeServlet extends HttpServlet {
         request.setAttribute("page", page);
         request.setAttribute("name", request.getParameter("name"));
         request.setAttribute("code", request.getParameter("code"));
+        request.setAttribute("status", status);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/follows/show.jsp");
         rd.forward(request, response);
 
-        System.out.println("******************");
-        System.out.println(employees_byCode);
-        System.out.println("******************");
-        System.out.println(employees_byName);
+//        System.out.println("******************");
+//        System.out.println(employees_byCode);
+//        System.out.println("******************");
+//        System.out.println(employees_byName);
 
     }
 }
